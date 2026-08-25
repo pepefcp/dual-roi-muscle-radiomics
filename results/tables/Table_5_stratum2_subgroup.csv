@@ -1,0 +1,7 @@
+Model,Specification,n total,n healthy,n pathological,AUC-ROC,AUC 95% CI (BCa),Accuracy,Sensitivity,Specificity,Brier
+2,RF mean echointensity (continuous),16,8,8,0.266,0.062–0.596,0.375,0.625,0.125,0.252
+3,First-order radiomics (ROI1+ROI2),16,8,8,0.938,0.685–1.000,0.812,0.750,0.875,0.200
+4,Texture-only radiomics (ROI1+ROI2),16,8,8,0.922,0.636–1.000,0.812,0.750,0.875,0.207
+5,ROI1 full radiomics,16,8,8,0.969,0.758–1.000,0.938,0.875,1.000,0.195
+6,ROI2 full radiomics,16,8,8,0.625,0.273–0.875,0.562,0.625,0.500,0.235
+7,Dual-ROI full radiomics,16,8,8,0.938,0.628–1.000,0.938,0.875,1.000,0.189

@@ -1,0 +1,4 @@
+Classifier,AUC,AUC 95% CI,Brier,F1
+L2 logistic regression (primary),0.952,0.883–0.985,0.098,0.873
+Linear SVM,0.974,0.918–0.994,0.072,0.937
+Random Forest,0.946,0.868–0.982,0.095,0.886

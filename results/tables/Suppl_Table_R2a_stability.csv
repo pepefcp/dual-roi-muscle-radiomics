@@ -1,0 +1,4 @@
+Model,AUC (mean over seeds),AUC SD across seeds,AUC min–max,Features/fold mean ± SD,Features/fold min–max,Fallback folds n (%)
+Model 5 — ROI1,0.892,0.037,0.810–0.942,16.6 ± 3.0,11–26,0 (0%)
+Model 6 — ROI2,0.873,0.017,0.846–0.907,35.0 ± 2.4,29–39,0 (0%)
+Model 7 — Dual-ROI,0.933,0.017,0.897–0.960,52.6 ± 4.7,41–66,0 (0%)

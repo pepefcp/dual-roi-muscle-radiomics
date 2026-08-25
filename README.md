@@ -34,7 +34,7 @@ Any deviation from the SAP is recorded in `DEVIATIONS_LOG.md` and explicitly fla
 | Endpoint | Definition | n | Status |
 |---|---|---|---|
 | Primary | Healthy vs Pathological detection, full cohort | 62 | confirmatory |
-| Exploratory | Healthy vs Pathological within Heckmatt-analogue Grade 2 | 16 | exploratory |
+| Exploratory | Healthy vs Pathological within echointensity stratum Grade 2 | 16 | exploratory |
 | Sensitivity | Healthy vs Pathological, SMA excluded | 52 | sensitivity |
 
 **Primary contrast.** Model 7 (Dual-ROI full radiomics) vs Model 2 (continuous mean echointensity).
@@ -61,7 +61,7 @@ Any deviation from the SAP is recorded in `DEVIATIONS_LOG.md` and explicitly fla
 │   ├── 01_load_and_prepare.py   # Cohort assembly per SAP §4
 │   ├── 02_descriptives.py       # Table 1 + Figure 2
 │   ├── 03_primary_analysis.py   # Models 1–7, primary endpoint, primary contrast
-│   ├── 04_grade2_analysis.py    # Heckmatt-analogue Grade 2 exploratory analysis
+│   ├── 04_grade2_analysis.py    # echointensity stratum Grade 2 exploratory analysis
 │   ├── 05_sensitivity.py        # SMA-excluded, age covariate, classifier sensitivity
 │   ├── 06_permutation.py        # Permutation null distribution (supportive)
 │   └── lib/

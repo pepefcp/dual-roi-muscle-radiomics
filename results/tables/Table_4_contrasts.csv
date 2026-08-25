@@ -1,0 +1,6 @@
+Contrast,ΔAUC,BCa 95% CI,Bootstrap p (two-sided),DeLong p (two-sided),CI excludes 0
+Primary: Model 7 vs Model 2,+0.215,+0.109 to +0.348,0.0000,0.0004,yes
+Secondary: Model 4 vs Model 2,+0.193,+0.082 to +0.333,0.0030,0.0023,yes
+Supportive: Model 7 vs Model 1,+0.300,+0.170 to +0.451,0.0000,0.0000,yes
+Supportive: Model 7 vs Model 5,+0.010,-0.055 to +0.081,0.7880,0.7606,no
+Supportive: Model 7 vs Model 6,+0.050,+0.014 to +0.103,0.0060,0.0188,yes

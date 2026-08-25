@@ -1,0 +1,8 @@
+Model,Specification,AUC-ROC,AUC 95% CI (BCa),Fold AUC mean ± SD,AUC-PR,Accuracy,Sensitivity,Specificity,F1,Brier,Cal slope
+1,Heckmatt-analogue grade (ordinal),0.649,0.486–0.783,0.749 ± 0.123,0.734,0.694,0.846,0.435,0.776,0.238,9.85
+2,RF mean echointensity (continuous),0.734,0.589–0.841,0.749 ± 0.126,0.851,0.645,0.744,0.478,0.725,0.238,14.78
+3,First-order radiomics (ROI1+ROI2),0.955,0.879–0.988,0.957 ± 0.056,0.977,0.871,0.872,0.870,0.895,0.132,3.44
+4,Texture-only radiomics (ROI1+ROI2),0.926,0.836–0.972,0.918 ± 0.078,0.958,0.806,0.769,0.870,0.833,0.114,1.43
+5,ROI1 full radiomics,0.939,0.855–0.980,0.920 ± 0.081,0.965,0.855,0.846,0.870,0.880,0.105,1.67
+6,ROI2 full radiomics,0.899,0.797–0.959,0.900 ± 0.087,0.943,0.790,0.795,0.783,0.827,0.125,1.01
+7,Dual-ROI full radiomics,0.949,0.871–0.983,0.942 ± 0.065,0.972,0.855,0.795,0.957,0.873,0.099,1.66

@@ -1,0 +1,7 @@
+Statistic,Value
+Observed ΔAUC,+0.2230
+Null mean,+0.0120
+Null SD,0.1240
+Permutations ≥ observed,24
+Empirical p (one-sided),0.0499
+n permutations,500

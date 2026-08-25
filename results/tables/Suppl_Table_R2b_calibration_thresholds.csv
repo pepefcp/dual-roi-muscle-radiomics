@@ -1,0 +1,4 @@
+Model,Brier,Calibration intercept,Calibration slope,Threshold,Sensitivity,Specificity,PPV,NPV,TP,FP,FN,TN
+Model 5 — ROI1,0.111,0.505,1.797,0.5,0.795,0.87,0.912,0.714,31,3,8,20
+Model 6 — ROI2,0.126,0.418,1.004,0.5,0.769,0.783,0.857,0.667,30,5,9,18
+Model 7 — Dual-ROI,0.097,1.073,1.801,0.5,0.795,0.957,0.969,0.733,31,1,8,22

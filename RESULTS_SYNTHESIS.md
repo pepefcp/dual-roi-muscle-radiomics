@@ -8,7 +8,7 @@
 
 ## Headline result
 
-> A dual-ROI IBSI-compliant radiomic model of paediatric anterior-thigh muscle ultrasound discriminates healthy from pathological muscle substantially better than scalar mean echointensity (AUC 0.95 vs 0.73, ΔAUC +0.22, BCa 95% CI +0.11 to +0.36, p < 0.0001). The advantage is largest precisely where scalar grading is range-restricted: in the Heckmatt-analogue Grade 2 ambiguity zone, scalar echointensity classifies at chance (AUC 0.30) while dual-ROI radiomics achieves AUC 0.95.
+> A dual-ROI IBSI-compliant radiomic model of paediatric anterior-thigh muscle ultrasound discriminates healthy from pathological muscle substantially better than scalar mean echointensity (AUC 0.95 vs 0.73, ΔAUC +0.22, BCa 95% CI +0.11 to +0.36, p < 0.0001). The advantage is largest precisely where scalar grading is range-restricted: in the echointensity stratum 2 ambiguity zone, scalar echointensity classifies at chance (AUC 0.30) while dual-ROI radiomics achieves AUC 0.95.
 
 ---
 
@@ -20,7 +20,7 @@
 
 | Model | AUC-ROC | BCa 95% CI | Brier | F1 |
 |---|---|---|---|---|
-| 1 — Heckmatt-analogue grade (ordinal) | 0.652 | 0.487–0.784 | 0.238 | 0.776 |
+| 1 — echointensity stratum (ordinal) | 0.652 | 0.487–0.784 | 0.238 | 0.776 |
 | 2 — RF mean echointensity (continuous) | 0.732 | 0.589–0.844 | 0.238 | 0.725 |
 | 3 — First-order radiomics | 0.958 | 0.885–0.989 | 0.131 | 0.895 |
 | 4 — Texture-only radiomics | 0.932 | 0.847–0.976 | 0.115 | 0.849 |
@@ -43,7 +43,7 @@ Observed ΔAUC = +0.223; null distribution mean +0.012, SD 0.124; empirical one-
 
 ---
 
-## Heckmatt-analogue Grade 2 exploratory subgroup (SAP §15)
+## echointensity stratum 2 exploratory subgroup (SAP §15)
 
 **Subgroup composition.** n = 16 (8 healthy, 8 pathological). Inclusion threshold met (≥ 6 per class).
 
@@ -56,7 +56,9 @@ Observed ΔAUC = +0.223; null distribution mean +0.012, SD 0.124; empirical one-
 | 6 — ROI2 full radiomics | 0.609 | 0.264–0.873 |
 | **7 — Dual-ROI full radiomics** | **0.953** | **0.685–1.000** |
 
-**Interpretation.** Within the Grade 2 ambiguity zone — where echointensity grading is range-restricted by definition — scalar echointensity performs *worse than chance* (AUC 0.30; the BCa CI just barely contains 0.5). Dual-ROI radiomic features retain strong discriminative signal (AUC 0.95). ROI1 microstructure carries the discrimination; ROI2 alone is near-chance in this subgroup. **This analysis is exploratory by SAP design and requires external validation. Permitted framing per SAP §15:** "Within the Heckmatt-analogue Grade 2 subgroup, radiomic features retained discriminative signal."
+**Interpretation.** This subgroup is defined by mean echointensity falling between 40 and 55 a.u. Mean echointensity therefore cannot discriminate within it: its range is restricted by construction, and the low value obtained (AUC 0.30) reflects that restriction rather than a failure of the comparator. The comparison of radiomics against mean echointensity *within* this stratum is not interpretable and is no longer reported. What the data support is narrower: within a band where grey level is uninformative by design, radiomic features still separated the groups, with the discrimination carried by ROI1 (AUC 0.97) and ROI2 alone close to chance. With 16 participants this is exploratory and hypothesis-generating; confidence intervals are wide and external validation is required.
+
+*Note (August 2026):* the term "Heckmatt-analogue" has been retired throughout. No observer-based visual Heckmatt grading was performed in this study; the variable is a discretisation of mean echointensity at prespecified thresholds and is now called the **echointensity stratum**.
 
 ---
 
@@ -93,7 +95,7 @@ All age corrections, duplicate removals, and exclusions in SAP §4 applied as lo
 
 The story now writes itself, in this order:
 
-1. **Hook.** Heckmatt grading is the clinical workhorse for paediatric muscle ultrasound, but its discriminative information collapses in Grade 2: in our cohort, 8 healthy and 8 pathological children all fell in the same scalar bin. Scalar echointensity in Grade 2 classifies at chance (AUC 0.30). *Figure 2.*
+1. **Hook.** Mean echointensity is the quantitative workhorse for paediatric muscle ultrasound, but a single averaged grey level leaves an overlap zone: in our cohort, 8 healthy and 8 pathological children fell within the same intermediate echointensity band (40–55 a.u.). Within that band the measurement is range-restricted by construction and cannot discriminate. *Figure 2.*
 
 2. **Question.** Can quantitative radiomic texture analysis recover discriminative signal where scalar grading fails?
 
@@ -136,13 +138,13 @@ analysis_v1.1_complete/
 │   └── lib/analysis.py
 └── results/
     ├── tables/
-    │   ├── Table_1a_descriptives.csv
-    │   ├── Table_1b_group_comparison.csv
-    │   ├── Table_1c_heckmatt_distribution.csv
-    │   ├── Table_2_primary_endpoint.csv
-    │   ├── Table_3_contrasts.csv
-    │   ├── Table_4_grade2_subgroup.csv
-    │   ├── Table_4b_grade2_contrasts.csv
+    │   ├── Table_1_descriptives_and_comparison.csv
+    │   ├── Table_2_echointensity_strata.csv
+    │   ├── Table_2_echointensity_strata.csv
+    │   ├── Table_3_primary_endpoint.csv
+    │   ├── Table_4_contrasts.csv
+    │   ├── Table_5_stratum2_subgroup.csv
+    │   ├── Table_5b_stratum2_contrasts.csv
     │   ├── Suppl_Table_3_SMA_excluded.csv
     │   ├── Suppl_Table_4_age_covariate.csv
     │   ├── Suppl_Table_5_classifier_sensitivity.csv
