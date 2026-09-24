@@ -6,7 +6,10 @@ import pandas as pd, numpy as np, openpyxl
 from scipy.stats import mannwhitneyu, chi2_contingency
 
 REPO = Path(__file__).resolve().parent.parent
-MASTER = "/root/.claude/uploads/328cc7bc-dbbf-5444-b986-341f14ffd4ba/fc6d0ed0-MASTER_Fragilidad_Pediatrica.xlsx"
+# Author-reviewed source records with reconciled units. This file contains
+# patient identifiers and is NOT distributed; it is available from the
+# corresponding author under the data availability statement.
+MASTER = str(REPO / "data" / "MASTER_source_records.xlsx")
 
 def norm(s):
     s = unicodedata.normalize("NFD", str(s)).encode("ascii","ignore").decode().lower()

@@ -10,7 +10,7 @@ This repository contains the locked Statistical Analysis Plan (SAP), analysis co
 
 The Statistical Analysis Plan (`SAP_v1.1_LOCKED.docx` / `SAP_v1.1_LOCKED.md`) was finalized **before model fitting on the locked final cohort under the locked protocol**, and was archived at the Open Science Framework prior to analysis.
 
-- **OSF DOI:** *[pending — registration submitted, awaiting approval]*
+- **OSF Registration DOI:** https://doi.org/10.17605/OSF.IO/AX74E (registered 4 May 2026)
 - **OSF Project URL:** https://osf.io/9pc4g
 
 Any deviation from the SAP is recorded in `DEVIATIONS_LOG.md` and explicitly flagged in the manuscript text. Post-hoc analyses are labelled as such.
