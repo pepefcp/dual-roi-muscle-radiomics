@@ -1,2 +1,4 @@
 Analysis,Model 2 AUC,Model 7 AUC,ΔAUC,ΔAUC 95% CI,p
 14.4a Age as covariate,0.789 [0.652–0.886],0.950 [0.876–0.986],+0.161,+0.073 to +0.293,0.0000
+14.4b Age + subcutaneous fat as covariates,0.768 [0.635–0.870],0.948 [0.873–0.984],+0.179,+0.078 to +0.308,0.0000
+14.4c Age-residualized features,0.718 [0.578–0.828],0.910 [0.815–0.963],+0.192,+0.060 to +0.324,0.0040
