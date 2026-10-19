@@ -107,6 +107,16 @@ These entries record errors found while responding to peer review at *Muscle & N
 | Correction | Manuscript figures corrected to 91 and 182. The code was correct as executed. |
 | Impact | Reporting only. |
 
+### Correction 4 — Covariate–image pairing crossed for five myogenic participants (platform-upload mislabeling)
+
+| Item | Value |
+|---|---|
+| Date | 2026-09-29 |
+| Affected | Demographic covariates (age, sex), echointensity comparator and subcutaneous-fat value of participants 13, 28, 42, 43 and 55 (all myogenic); `results/tables/Suppl_Table_4_age_covariate.csv`; Supplementary Table 7 of the manuscript |
+| Defect | During the segmentation-robustness audit (Supplementary Methods 3 of the revised manuscript), image-by-image verification against the archived source images — by unique pixel dimensions and, where in doubt, normalized cross-correlation — revealed that five myogenic images had been uploaded to the analysis platform in 2023 under each other's participant codes (a closed 5-cycle). The radiomic features of each of these five rows therefore belonged to the image of another participant of the same diagnostic group, while age, sex and the ImageJ echointensity comparator belonged to the nominal participant. Group labels are unaffected, so the primary contrast and all group-level analyses are unaffected by construction. The same verification found two pairs of participants sharing a duplicated stored image (one control pair, one SMA-II pair): the 62 participants rest on 60 unique images. |
+| Correction | The covariate–image pairing was corrected by reassigning age, sex, echointensity and subcutaneous fat within the five rows (42←28, 43←42, 13←43, 55←13, 28←55, features fixed). The full pipeline was independently re-executed from the raw workbook and reproduced every published value exactly before the correction was applied. Analyses 14.4a–c (the only ones that use per-participant covariates) were recomputed; the table file is updated. |
+| Impact | 14.4a: ΔAUC +0.161 → +0.162 (p < 0.001). 14.4b: +0.179 → +0.176 (p < 0.001). 14.4c: +0.192 → +0.174 (+0.054 to +0.314), p = 0.004 → 0.008; combined-model AUC 0.910 → 0.893. No change in the direction or significance of any contrast. |
+
 ## Analyses added in response to peer review
 
 Requested by Reviewer 2 and executed after the review, using the locked cohort and the pipeline as specified. These are additions, not changes to the prespecified analyses.
