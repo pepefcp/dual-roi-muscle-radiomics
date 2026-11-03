@@ -6,9 +6,12 @@
 
 ---
 
+
+> **Note (2026-11-03).** All model estimates below are those of the full 50-seed execution committed on 2026-08-25 (Deviation 1 resolved; see `DEVIATIONS_LOG.md`). The submitted manuscript reported the 25-seed execution; differences are ≤ 0.011 in AUC in the full cohort and change no conclusion.
+
 ## Headline result
 
-> A dual-ROI IBSI-compliant radiomic model of paediatric anterior-thigh muscle ultrasound discriminates healthy from pathological muscle substantially better than scalar mean echointensity (AUC 0.95 vs 0.73, ΔAUC +0.22, BCa 95% CI +0.11 to +0.36, p < 0.0001). The advantage is largest precisely where scalar grading is range-restricted: in the echointensity stratum 2 ambiguity zone, scalar echointensity classifies at chance (AUC 0.30) while dual-ROI radiomics achieves AUC 0.95.
+> A dual-ROI IBSI-compliant radiomic model of paediatric anterior-thigh muscle ultrasound discriminates healthy from pathological muscle substantially better than scalar mean echointensity (AUC 0.95 vs 0.73, ΔAUC +0.22, BCa 95% CI +0.11 to +0.35, p < 0.0001; full 50-seed execution, see DEVIATIONS_LOG.md). The advantage is largest precisely where scalar grading is range-restricted: in the echointensity stratum 2 ambiguity zone, scalar echointensity classifies at chance (AUC 0.27) while dual-ROI radiomics achieves AUC 0.94.
 
 ---
 
@@ -20,20 +23,20 @@
 
 | Model | AUC-ROC | BCa 95% CI | Brier | F1 |
 |---|---|---|---|---|
-| 1 — echointensity stratum (ordinal) | 0.652 | 0.487–0.784 | 0.238 | 0.776 |
-| 2 — RF mean echointensity (continuous) | 0.732 | 0.589–0.844 | 0.238 | 0.725 |
-| 3 — First-order radiomics | 0.958 | 0.885–0.989 | 0.131 | 0.895 |
-| 4 — Texture-only radiomics | 0.932 | 0.847–0.976 | 0.115 | 0.849 |
-| 5 — ROI1 full radiomics | 0.931 | 0.840–0.976 | 0.110 | 0.849 |
-| 6 — ROI2 full radiomics | 0.903 | 0.804–0.961 | 0.124 | 0.838 |
-| **7 — Dual-ROI full radiomics** | **0.952** | **0.875–0.984** | **0.098** | **0.873** |
+| 1 — echointensity stratum (ordinal) | 0.649 | 0.486–0.783 | 0.238 | 0.776 |
+| 2 — RF mean echointensity (continuous) | 0.734 | 0.589–0.841 | 0.238 | 0.725 |
+| 3 — First-order radiomics | 0.955 | 0.879–0.988 | 0.132 | 0.895 |
+| 4 — Texture-only radiomics | 0.926 | 0.836–0.972 | 0.114 | 0.833 |
+| 5 — ROI1 full radiomics | 0.939 | 0.855–0.980 | 0.105 | 0.880 |
+| 6 — ROI2 full radiomics | 0.899 | 0.797–0.959 | 0.125 | 0.827 |
+| **7 — Dual-ROI full radiomics** | **0.949** | **0.871–0.983** | **0.099** | **0.873** |
 
 ### Primary contrast (Table 3)
 
 | Contrast | ΔAUC | BCa 95% CI | Bootstrap p | DeLong p |
 |---|---|---|---|---|
-| **Primary: Model 7 vs Model 2** | **+0.220** | **+0.113 to +0.358** | **< 0.0001** | **0.0004** |
-| Secondary mechanistic: Model 4 vs Model 2 | +0.200 | +0.088 to +0.338 | 0.0010 | 0.0015 |
+| **Primary: Model 7 vs Model 2** | **+0.215** | **+0.109 to +0.348** | **< 0.0001** | **0.0004** |
+| Secondary mechanistic: Model 4 vs Model 2 | +0.193 | +0.082 to +0.333 | 0.0030 | 0.0023 |
 
 **H₀ rejected** (BCa CI excludes zero, bootstrap p < α = 0.05).
 
@@ -49,14 +52,14 @@ Observed ΔAUC = +0.223; null distribution mean +0.012, SD 0.124; empirical one-
 
 | Model | AUC-ROC | BCa 95% CI |
 |---|---|---|
-| 2 — RF mean echointensity (continuous) | **0.297** | **0.075–0.635** |
+| 2 — RF mean echointensity (continuous) | **0.266** | **0.062–0.596** |
 | 3 — First-order radiomics | 0.938 | 0.685–1.000 |
-| 4 — Texture-only radiomics | 0.906 | 0.580–1.000 |
+| 4 — Texture-only radiomics | 0.922 | 0.636–1.000 |
 | 5 — ROI1 full radiomics | 0.969 | 0.758–1.000 |
-| 6 — ROI2 full radiomics | 0.609 | 0.264–0.873 |
-| **7 — Dual-ROI full radiomics** | **0.953** | **0.685–1.000** |
+| 6 — ROI2 full radiomics | 0.625 | 0.273–0.875 |
+| **7 — Dual-ROI full radiomics** | **0.938** | **0.628–1.000** |
 
-**Interpretation.** This subgroup is defined by mean echointensity falling between 40 and 55 a.u. Mean echointensity therefore cannot discriminate within it: its range is restricted by construction, and the low value obtained (AUC 0.30) reflects that restriction rather than a failure of the comparator. The comparison of radiomics against mean echointensity *within* this stratum is not interpretable and is no longer reported. What the data support is narrower: within a band where grey level is uninformative by design, radiomic features still separated the groups, with the discrimination carried by ROI1 (AUC 0.97) and ROI2 alone close to chance. With 16 participants this is exploratory and hypothesis-generating; confidence intervals are wide and external validation is required.
+**Interpretation.** This subgroup is defined by mean echointensity falling between 40 and 55 a.u. Mean echointensity therefore cannot discriminate within it: its range is restricted by construction, and the low value obtained (AUC 0.27) reflects that restriction rather than a failure of the comparator. The comparison of radiomics against mean echointensity *within* this stratum is not interpretable and is no longer reported. What the data support is narrower: within a band where grey level is uninformative by design, radiomic features still separated the groups, with the discrimination carried by ROI1 (AUC 0.97) and ROI2 alone close to chance. With 16 participants this is exploratory and hypothesis-generating; confidence intervals are wide and external validation is required.
 
 *Note (August 2026):* the term "Heckmatt-analogue" has been retired throughout. No observer-based visual Heckmatt grading was performed in this study; the variable is a discretisation of mean echointensity at prespecified thresholds and is now called the **echointensity stratum**.
 
@@ -103,9 +106,9 @@ The story now writes itself, in this order:
 
 4. **Primary result.** Across the full cohort, dual-ROI radiomics outperforms scalar echointensity (AUC 0.95 vs 0.73, ΔAUC +0.22, p < 0.0001 bootstrap, p = 0.0004 DeLong, p = 0.05 permutation). *Figure 3.*
 
-5. **Mechanism.** Texture beyond intensity contributes (Model 4 vs 2: +0.20 AUC, p = 0.001).
+5. **Mechanism.** Texture beyond intensity contributes (Model 4 vs 2: +0.19 AUC, p = 0.003).
 
-6. **The ambiguity-zone showcase (exploratory).** Within Grade 2, scalar echointensity AUC 0.30; dual-ROI AUC 0.95. ROI1 microstructure does the work. *Figure 4.* Caveat: n = 16 subgroup, exploratory only.
+6. **The ambiguity-zone showcase (exploratory).** Within Grade 2, scalar echointensity AUC 0.27; dual-ROI AUC 0.94. ROI1 microstructure does the work. *Figure 4.* Caveat: n = 16 subgroup, exploratory only.
 
 7. **Robustness.** Result holds with SMA excluded (+0.33 AUC), with age covariate (+0.16 AUC), and across three classifier choices.
 
