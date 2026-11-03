@@ -117,15 +117,25 @@ These entries record errors found while responding to peer review at *Muscle & N
 | Correction | The covariate–image pairing was corrected by reassigning age, sex, echointensity and subcutaneous fat within the five rows (42←28, 43←42, 13←43, 55←13, 28←55, features fixed). The full pipeline was independently re-executed from the raw workbook and reproduced every published value exactly before the correction was applied. Analyses 14.4a–c (the only ones that use per-participant covariates) were recomputed; the table file is updated. |
 | Impact | 14.4a: ΔAUC +0.161 → +0.162 (p < 0.001). 14.4b: +0.179 → +0.176 (p < 0.001). 14.4c: +0.192 → +0.174 (+0.054 to +0.314), p = 0.004 → 0.008; combined-model AUC 0.910 → 0.893. No change in the direction or significance of any contrast. |
 
+### Resolution of Deviation 1 — Full 50-seed protocol executed at revision
+
+| Item | Value |
+|---|---|
+| Date | 2026-08-25 (executed); 2026-11-03 (recorded) |
+| Affected | `results/tables/Table_3_primary_endpoint.csv`, `Table_4_contrasts.csv`, `Table_5_stratum2_subgroup.csv`, `Table_5b_stratum2_contrasts.csv`, `results/figures/`; Tables 3–5, Figures 2–3, Abstract and Results of the revised manuscript |
+| What was done | The prespecified analyses (`src/03_primary_analysis.py`, `src/04_grade2_analysis.py`) were re-executed with the full locked list of 50 seeds, as SAP §9.2 specifies, instead of the 25-seed prefix used in the original execution (Deviation 1). The results committed on 2026-08-25 and reported in the revised manuscript are those of the 50-seed execution. This entry records that fact, which the August commit did not state. |
+| Impact | Relative to the 25-seed execution (submitted manuscript): Model 7 AUC 0.952 (0.875–0.984) → 0.949 (0.871–0.983); primary contrast ΔAUC +0.220 (+0.113 to +0.358) → +0.215 (+0.109 to +0.348); Model 7 vs Model 5 +0.021 (p = 0.568) → +0.010 (p = 0.788); stratum-2 Model 7 AUC 0.953 → 0.938, Model 2 0.297 → 0.266. No estimate in the full cohort changed by more than 0.011 in AUC, none in the exploratory stratum by more than 0.031, and no contrast changed direction or significance. Both executions are reproducible from the archived code and seed list (`python src/03_primary_analysis.py 25` and `python src/03_primary_analysis.py`). The sensitivity analyses of SAP §14.3–14.5 (`src/05_sensitivity.py`, `src/10_age_adiposity_sensitivity.py`) retain the 25-seed, 1,000-resample configuration; the reviewer-requested analyses (`src/07_reviewer2.py`) use 20 seeds (integers 0–19) rather than the locked list, a choice made at execution and stated in the supplementary tables. |
+| Note on Deviation 2 | The values quoted in the "Interpretation" row of Deviation 2 (Table 3: ΔAUC +0.220, +0.113 to +0.358) are those of the 25-seed execution current at the time of writing; under the 50-seed execution they are +0.215 (+0.109 to +0.348), with the same conclusion. |
+
 ## Analyses added in response to peer review
 
 Requested by Reviewer 2 and executed after the review, using the locked cohort and the pipeline as specified. These are additions, not changes to the prespecified analyses.
 
 | Script | Content |
 |---|---|
-| `src/07_reviewer2.py` | Features retained per fold, selection frequency across 20 seeds × 5 folds, discrimination variability across seeds, calibration (Brier, intercept, slope, curve), and sensitivity, specificity, positive and negative predictive value at a fixed decision threshold. |
+| `src/07_reviewer2.py` | Features retained per fold, selection frequency across 20 seeds (integers 0–19, not the locked list) × 5 folds, discrimination variability across seeds, calibration (Brier, intercept, slope, curve), and sensitivity, specificity, positive and negative predictive value at a fixed decision threshold. |
 | `src/09_table1_final.py` | Table 1 regenerated with corrections 1 and 2 applied. |
 
-A sensitivity analysis excluding the nine participants whose muscle pathology was secondary to an upper motor neuron lesion was also performed; the primary contrast was unchanged (ΔAUC +0.213 versus +0.207 in the full cohort).
+A sensitivity analysis excluding the nine participants whose muscle pathology was secondary to an upper motor neuron lesion was also performed; the primary contrast was unchanged (50 locked seeds, 2,000 resamples: ΔAUC +0.232, 95% BCa CI +0.113 to +0.391, p < 0.001, versus +0.215 in the full cohort; Supplementary Table 6 of the revised manuscript).
 
 Any decision threshold reported in the revised manuscript outside the prespecified 0.50 cut-point is explicitly labelled post hoc and illustrative, and was selected after inspection of the data.
