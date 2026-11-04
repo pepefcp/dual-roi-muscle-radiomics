@@ -1,0 +1,6 @@
+Model,mean_predicted,observed,n
+Model 4 — Texture-only,0.1143935878412668,0.0769230769230769,13
+Model 4 — Texture-only,0.3255751384122121,0.5,12
+Model 4 — Texture-only,0.6016840486028006,0.5833333333333334,12
+Model 4 — Texture-only,0.833374450628873,1.0,12
+Model 4 — Texture-only,0.926602885358971,1.0,13
