@@ -27,22 +27,12 @@ def get_feature_groups(df: pd.DataFrame):
     """Identify ROI1/ROI2 feature columns and split first-order vs texture."""
     roi1 = [c for c in df.columns if c.startswith("ROI1_")]
     roi2 = [c for c in df.columns if c.startswith("ROI2_")]
-    # Heuristic for first-order: columns that look like global intensity stats.
-    # The QUIBIM IBSI feature names often include words like "MEAN", "MEDIAN",
-    # "PERCENTILE", "STANDARD", "ENERGY", "ENTROPY (first-order)", "MIN", "MAX",
-    # "RANGE", "VARIANCE", "SKEWNESS", "KURTOSIS", "UNIFORMITY", "ROOT MEAN"...
-    first_order_kw = ["MEAN", "MEDIAN", "PERCENT", "STANDARD", "RANGE", "MIN", "MAX",
-                      "VARIANC", "SKEW", "KURTOS", "UNIFORM", "RMS", "ROOT", "TOTAL ENERGY",
-                      "INTERQUART", "MAD", "MEDIA"]
-    def is_first_order(name: str) -> bool:
-        n = name.upper()
-        # Texture matrices contain explicit prefixes — exclude these
-        if any(k in n for k in ["GLCM", "GLRLM", "GLSZM", "GLDM", "NGTDM", "RUN", "ZONE",
-                                 "DEPENDENCE", "NEIGHBORHOOD", "NEIGHBOURHOOD", "COOC"]):
-            return False
-        return any(k in n for k in first_order_kw)
-    roi1_fo = [c for c in roi1 if is_first_order(c)]
-    roi2_fo = [c for c in roi2 if is_first_order(c)]
+    # First-order features carry the platform prefix "Primerorden-" (18 per region);
+    # all other IBSI families are texture matrices. (Corrected at revision: the
+    # original keyword heuristic assigned only 8 of 18 first-order features per
+    # region to Model 3 and left the other 10 in Model 4; see DEVIATIONS_LOG.)
+    roi1_fo = [c for c in roi1 if c.startswith("ROI1_Primerorden-")]
+    roi2_fo = [c for c in roi2 if c.startswith("ROI2_Primerorden-")]
     roi1_tex = [c for c in roi1 if c not in roi1_fo]
     roi2_tex = [c for c in roi2 if c not in roi2_fo]
     return {
