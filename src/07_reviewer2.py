@@ -12,7 +12,7 @@ import sys, json
 from pathlib import Path
 import numpy as np, pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.analysis import run_cv, select_features
+from lib.analysis import run_cv, select_features, _safe_seed
 from sklearn.metrics import roc_auc_score, confusion_matrix
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
@@ -22,12 +22,15 @@ REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "results" / "tables"
 OUT.mkdir(parents=True, exist_ok=True)
 THRESHOLD = 0.50            # umbral de decision predefinido
-SEEDS = list(range(20))     # 20 semillas x 5 folds = 100 particiones
+SEEDS = json.load(open(REPO / "seeds.json"))["seeds"]   # 50 semillas bloqueadas x 5 folds = 250 particiones (SAP 14.2)
 
 d = pd.read_parquet(REPO / "data" / "cohort_locked.parquet")
 y = (d["subgroup"] != "healthy").astype(int).values
 feat = [c for c in d.columns if c.startswith(("ROI1_", "ROI2_"))]
+fo = lambda c: c.split("_", 1)[1].startswith("Primerorden-")   # familias por prefijo (Correction 6)
 MODELS = {
+    "Model 3 — First-order":  [c for c in feat if fo(c)],
+    "Model 4 — Texture-only": [c for c in feat if not fo(c)],
     "Model 5 — ROI1":    [c for c in feat if c.startswith("ROI1_")],
     "Model 6 — ROI2":    [c for c in feat if c.startswith("ROI2_")],
     "Model 7 — Dual-ROI": feat,
@@ -50,7 +53,7 @@ for name, cols in MODELS.items():
     # frecuencia de seleccion de cada variable sobre las 100 particiones
     counts = np.zeros(len(cols))
     for s in SEEDS:
-        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=s)
+        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=_safe_seed(s))
         for tr, _ in skf.split(X, y):
             Xtr = StandardScaler().fit_transform(
                   SimpleImputer(strategy="median").fit_transform(X[tr]))
