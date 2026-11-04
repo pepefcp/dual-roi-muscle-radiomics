@@ -14,6 +14,7 @@ labels; image-level aggregation) did not describe the executed procedure. `DEVIA
 
 **Changed**
 - `src/12_covariate_pairing_correction.py` (new) applies Correction 4 to the locked matrix by platform image code; `src/03`, `04`, `05` (50 seeds, 2,000 resamples), `07` and `11` re-executed on the corrected matrix. Primary contrast +0.215 → +0.217 (+0.116 to +0.351); stratum-2 composition changed by four participants (Model 2 within stratum 0.266 → 0.391; contrasts +0.672 → +0.562 and +0.656 → +0.531, both p = 0.001). `DEVIATIONS_LOG.md`, "Resolution of Correction 4".
+- `README.md` — revised title, accurate pre-registration dates (locked before model fitting; analyses from 30 April 2026; OSF registration 4 May 2026), primary result of the revised manuscript, run order, and a table mapping repository names to the manuscript.
 - `src/13_exclusion_analyses.py` (new) — primary contrast with each enrolment group excluded in turn (Supplementary Table 6).
 - `src/07_reviewer2.py` — now uses the 50 locked seeds (SAP §14.2) instead of integers 0–19 and
 covers Models 3–7; `results/tables/Suppl_Table_R2*.csv` and `Suppl_calibration_curve_*.csv` regenerated.
