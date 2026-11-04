@@ -133,9 +133,97 @@ Requested by Reviewer 2 and executed after the review, using the locked cohort a
 
 | Script | Content |
 |---|---|
-| `src/07_reviewer2.py` | Features retained per fold, selection frequency across 20 seeds (integers 0–19, not the locked list) × 5 folds, discrimination variability across seeds, calibration (Brier, intercept, slope, curve), and sensitivity, specificity, positive and negative predictive value at a fixed decision threshold. |
+| `src/07_reviewer2.py` | Features retained per fold, selection frequency, discrimination variability across seeds, calibration (Brier, intercept, slope, curve), and sensitivity, specificity, positive and negative predictive value at a fixed decision threshold. First executed with 20 seeds (integers 0–19, not the locked list); re-executed on 2026-11-04 with the 50 locked seeds and extended to Models 3–7 (see "Entries added at revision" below). |
 | `src/09_table1_final.py` | Table 1 regenerated with corrections 1 and 2 applied. |
 
 A sensitivity analysis excluding the nine participants whose muscle pathology was secondary to an upper motor neuron lesion was also performed; the primary contrast was unchanged (50 locked seeds, 2,000 resamples: ΔAUC +0.232, 95% BCa CI +0.113 to +0.391, p < 0.001, versus +0.215 in the full cohort; Supplementary Table 6 of the revised manuscript).
 
 Any decision threshold reported in the revised manuscript outside the prespecified 0.50 cut-point is explicitly labelled post hoc and illustrative, and was selected after inspection of the data.
+
+---
+
+## Entries added at revision (November 2026)
+
+Recorded on 2026-11-04 after an independent re-verification of the revised manuscript against the archived analysis. Earlier entries are left as written; where one of them is superseded, the note below says so.
+
+### Correction 5 — Two methodological statements in the submitted manuscript did not describe the executed procedure
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 |
+| Affected | Methods of the submitted manuscript (Image acquisition; Region-of-interest segmentation; Radiomic feature extraction). No data, code or estimate. |
+| Defect | The submitted manuscript stated that the two regions of interest were segmented "by the same operator without access to clinical group labels at the time of segmentation" and that the feature set per participant was obtained "after image-level aggregation to the participant level" (mean of the three acquisitions). Neither statement describes what was done: one image per participant — the acquisition of highest technical quality, chosen before any measurement — was segmented and analyzed, values were not averaged across acquisitions, and the single operator who acquired, selected and segmented the images was not formally blinded to clinical status. The SAP registration (OSF AX74E, "Study design") carries the same two statements. |
+| Correction | The revised Methods state the executed procedure and list the absence of formal blinding as a limitation; a post hoc segmentation-robustness analysis (Supplementary Methods 2 of the revised manuscript) was added as partial mitigation. The aggregation rule of SAP §6 (mean over acquisitions) was never invoked because each participant contributed one analyzed image. |
+| Impact | None on any estimate. Affects the description of the study, not its execution. |
+
+### Correction 6 — Feature-family assignment defect in `src/03_primary_analysis.py` (Models 3 and 4)
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 |
+| Affected | `src/03_primary_analysis.py` (function `get_feature_groups`); Models 3 (first-order radiomics) and 4 (texture-only radiomics) in `results/tables/Table_3_primary_endpoint.csv` and `Table_4_contrasts.csv`, `results/figures/Figure_3_primary_endpoint.*`; Table 3, Table 4 (secondary contrast) and Figure 2 of the manuscript. Models 1, 2, 5, 6 and 7, the primary contrast, the stratum analysis (`src/04_grade2_analysis.py`, which assigns families by the `Primerorden-` prefix) and all sensitivity analyses are unaffected. |
+| Defect | The primary-analysis script identified first-order features by matching English keywords (MEAN, MEDIAN, PERCENT, RANGE, VARIANC, SKEW, KURTOS, …) against feature names that the extraction platform exports in Spanish (Curtosis, Asimetría, Varianza, Rango, Máximo, Mínimo, Energía, Entropía, Rangointercuartil, Energíatotal). Only 8 of the 18 first-order features per region matched; the other 10 were assigned to the texture family. Model 3 was therefore fitted on 16 instead of 36 features, and Model 4 on 166 features that included 20 first-order descriptors, contrary to SAP §7 (Model 4 excludes first-order features). The defect also explains the fallback-rule activation recorded for Model 3 (119 of 125 folds at 25 seeds; 241 of 250 at 50 seeds): with 16 candidates, fewer than 10 features survived the FDR filter in most folds. |
+| Correction | Family assignment now uses the platform prefix (`Primerorden-` = first-order; all other families = texture), as in `src/04_grade2_analysis.py`. Models 3 and 4 were re-executed with the 50 locked seeds and 2,000 resamples; all other models reproduced their previous values exactly. |
+| Impact | 50-seed execution, before → after: Model 3 AUC 0.955 (0.879–0.988) → 0.975 (0.920–0.995), Brier 0.132 → 0.091, F1 0.895 → 0.933, fallback folds 241 → 0; Model 4 AUC 0.926 (0.836–0.972) → 0.901 (0.801–0.957), Brier 0.114 → 0.132, F1 0.833 → 0.827; secondary contrast (Model 4 vs Model 2) ΔAUC +0.193 (+0.082 to +0.333; bootstrap p = 0.003, DeLong p = 0.002) → +0.167 (+0.061 to +0.306; p = 0.006, p = 0.007). The submitted (25-seed) values were Model 3 0.958, Model 4 0.932 and secondary contrast +0.200. The secondary contrast keeps its direction and significance. The statement in the submitted Results that first-order and texture-only models performed similarly is withdrawn: first-order features alone discriminate at least as well as the full feature set, and texture-only features less well, while still outperforming mean echointensity. |
+
+### Deviation 3 — Age-residualization (SAP §14.4c) executed as a cohort-wide fit
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 (recorded); analysis executed 2026-09 (`src/10_age_adiposity_sensitivity.py`) |
+| SAP section | §14.4c |
+| Deviation | SAP §14.4c specifies per-feature linear residualization against age estimated on the healthy controls of each training fold and applied within the fold. As executed, the linear fit of each feature (and of the echointensity comparator) on age was estimated once on the full cohort, without reference to group labels, before cross-validation. |
+| Reason | Implementation simplicity (the cross-validation machinery was reused unchanged). The fit uses age only, never the outcome, so no label information leaks; the age–label association itself is declared in Table 1. |
+| Impact | Supplementary Table 7 (age-residualized row: Model 2 0.719, Model 7 0.893, ΔAUC +0.174, +0.054 to +0.314, p = 0.008) reports the analysis as executed and now states the deviation. Conclusions unchanged. |
+
+### Re-execution of the reviewer-requested analyses with the locked seeds
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 |
+| Affected | `src/07_reviewer2.py`; `results/tables/Suppl_Table_R2a_stability.csv`, `Suppl_Table_R2b_calibration_thresholds.csv`, `Suppl_Table_R2c_selection_frequency.csv`, `Suppl_calibration_curve_*.csv`; Supplementary Tables 3–5 and 9 of the revised manuscript |
+| What was done | Inter-seed stability (prespecified in SAP §14.2 over the 50 locked seeds) had been executed at review with 20 arbitrary seeds (integers 0–19). The script now reads the locked seed list, uses the corrected family assignment (Correction 6) and covers Models 3–7 (Models 1 and 2 have a single predictor and no feature selection). Supplementary Table 5 (calibration and threshold metrics) is therefore computed on the same aggregated out-of-fold predictions as Table 3 of the manuscript. |
+| Impact | Values in Supplementary Tables 3–5 updated; the set of features selected in every partition of the combined-region model is given in Supplementary Table 4 and its segmentation-robustness in Supplementary Table 9. No conclusion changes. |
+
+### Sensitivity analysis excluding the duplicated-image pairs (n = 60)
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 |
+| Script | `src/11_duplicate_pair_sensitivity.py` |
+| Rationale | Correction 4 recorded two pairs of participants (one control pair, one SMA-II pair) whose stored images are duplicates; in the locked matrix the feature vectors of each pair are near-identical (Euclidean distance between standardized vectors 1.0 and 1.9, against a median nearest-neighbour distance of 9.5), so the two pairs may act as repeated observations across folds. |
+| What was done | The primary contrast was re-executed with one member of each pair removed (the rows holding platform images IMG-0001-000013A and IMG-0002-00009B(II); 50 locked seeds, 2,000 resamples, corrected matrix). |
+| Result | n = 60 (22 controls, 38 pathological): Model 2 AUC 0.732 (0.586–0.842), Model 7 0.952 (0.877–0.984), ΔAUC +0.220 (+0.117 to +0.362), p < 0.001, versus +0.217 in the full cohort. Reported in Supplementary Table 6 of the revised manuscript. The locked cohort (n = 62) remains the primary analysis, as SAP §4 does not permit post-lock removal of participants. |
+
+
+### Resolution of Correction 4 — re-execution of all analyses on the corrected pairing
+
+| Item | Value |
+|---|---|
+| Date | 2026-11-04 |
+| Script | `src/12_covariate_pairing_correction.py` (applies the five-row cycle to `data/cohort_locked.parquet`, keeping the uncorrected matrix as `data/cohort_locked_uncorrected_pairing.parquet`) |
+| Why | Correction 4 (2026-09-29) recomputed only the covariate analyses (SAP §14.4). The mis-paired variables include the echointensity comparator (Model 2 input) and the stratum assignment, so the paired inference of the primary contrast and the composition of the stratum-2 subgroup also depend on the pairing. The five rows are the platform images IMG-0004-00009(E) to IMG-0004-000013(E), a closed cycle in which each code held the image of the next; the row identifiers quoted in Correction 4 (13, 28, 42, 43, 55) refer to an earlier row numbering of the matrix and are superseded by the image codes. |
+| What was done | `src/03_primary_analysis.py`, `src/04_grade2_analysis.py`, `src/05_sensitivity.py` (50 seeds, 2,000 resamples), `src/07_reviewer2.py` and `src/11_duplicate_pair_sensitivity.py` were re-executed on the corrected matrix. `src/10_age_adiposity_sensitivity.py` had already been executed on the corrected pairing (Correction 4). The permutation test (`src/06_permutation.py`, Deviation 2) was not re-executed. |
+| Impact (50-seed values, before → after re-pairing) | Model 1 AUC 0.649 (0.486–0.783) → 0.648 (0.489–0.779); Model 2 0.734 (0.589–0.841) → 0.731 (0.588–0.840); Models 3–7 unchanged (features and labels unchanged); primary contrast +0.215 (+0.109 to +0.348), DeLong p = 0.0004 → +0.217 (+0.116 to +0.351), p = 0.0002; secondary contrast +0.167 (+0.061 to +0.306) → +0.169 (+0.069 to +0.293); Model 7 vs Model 1 +0.300 (+0.170 to +0.451) → +0.301 (+0.177 to +0.452). Stratum 2: two of the five participants left and two entered the stratum (membership still 8 controls, 8 pathological); Model 2 within the stratum 0.266 → 0.391 (0.125–0.716); Model 3 0.938 → 0.922; Model 4 0.906 → 0.922; Model 5 0.969 → 0.953; Model 6 0.609 → 0.719; Model 7 0.953 → 0.953; contrasts Model 7 vs 2 +0.672 (+0.348 to +0.905) → +0.562 (+0.206 to +0.857), Model 4 vs 2 +0.656 (+0.293 to +0.902) → +0.531 (+0.167 to +0.833), both p = 0.001. No contrast changed direction or significance. |
+
+### Exclusion analyses of the primary contrast (Supplementary Table 6 of the revised manuscript)
+
+| Analysis | n (controls / pathological) | Model 2 AUC (95% BCa CI) | Model 7 AUC (95% BCa CI) | ΔAUC (95% BCa CI), bootstrap p |
+|---|---|---|---|---|
+| SMA excluded (SAP §14.3; `src/05_sensitivity.py`) | 52 (23 / 29) | 0.643 (0.483–0.796) | 0.976 (0.896–0.997) | +0.333 (+0.187 to +0.498), < 0.001 |
+| Upper motor neuron causes excluded | 53 (23 / 30) | 0.728 (0.564–0.849) | 0.959 (0.874–0.989) | +0.232 (+0.120 to +0.384), < 0.001 |
+| Duplicated-image pairs, one member of each excluded (`src/11_duplicate_pair_sensitivity.py`) | 60 (22 / 38) | 0.732 (0.586–0.842) | 0.952 (0.877–0.984) | +0.220 (+0.117 to +0.362), < 0.001 |
+| Myopathic enrolment group excluded | 46 (23 / 23) | 0.811 (0.641–0.911) | 0.953 (0.852–0.990) | +0.142 (+0.053 to +0.282), 0.001 |
+| Peripheral nerve causes excluded | 57 (23 / 34) | 0.756 (0.614–0.871) | 0.953 (0.875–0.985) | +0.197 (+0.090 to +0.331), < 0.001 |
+
+All rows: 50 locked seeds, 2,000 resamples, corrected matrix (`src/11_duplicate_pair_sensitivity.py` and `src/13_exclusion_analyses.py`). The classifier sensitivity analysis (SAP §14.5, `src/05_sensitivity.py`) was re-executed in the same configuration: L2 logistic regression 0.949 (0.871–0.983), linear SVM 0.977 (0.925–0.994), random forest 0.946 (0.869–0.983).
+
+### Notes on earlier entries
+
+1. **Correction 2.** The text says the uncorrected myopathic rectus femoris thickness was "1.12 mm"; this is the value in the locked matrix (16 records, 1.12 ± 0.33). The submitted Table 1A printed "6.12 ± 0.33" for that cell, a transcription error in the table that the correction also removes.
+2. **Correction 4.** The row identifiers 13, 28, 42, 43 and 55 refer to an earlier numbering of the matrix; the five rows are the platform images IMG-0004-00009(E) to IMG-0004-000013(E) (see "Resolution of Correction 4"). "Supplementary Methods 3 of the revised manuscript" in that entry is now Supplementary Methods 2 after the supplement was reordered at revision. The row in "Resolution of Deviation 1" stating that `src/07_reviewer2.py` uses 20 seeds is superseded by the entry above.
+3. **Correction 1.** The denominators read "peripheral neurogenic and upper motor neuron 9/23 combined, SMA 6/10": 9/23 is the neurogenic column of Table 1 including SMA, of which the 6 SMA females are a subset (3/13 in the non-SMA neurogenic group); total 24/62.
+4. **Correction 2.** "18/18 records" counts the rows of the myopathic source sheet; 16 of them are in the locked cohort.
+5. **Deviation 1.** The impact assessment states that computing per-fold standard deviations from 125 rather than 250 evaluations "inflates SD estimates (factor √2 ≈ 1.41)". That is incorrect: halving the number of evaluations widens the uncertainty of the SD estimate but does not change its expected value (the √2 factor applies to the standard error of a mean). The 50-seed execution recorded above makes the point moot.
+6. **Fallback-rule activation.** The table above (Model 3: 119 of 125 folds) reflects the defect of Correction 6. After correction, the fallback rule was not invoked in any fold of any model in the 50-seed execution.
+7. **Seed configurations in the revised manuscript.** Tables 3–5 and Figures 2–3 of the manuscript, Supplementary Tables 3–6 and 8: 50 locked seeds, 2,000 resamples, corrected matrix. Supplementary Table 7: first 25 locked seeds, 1,000 resamples, corrected pairing (configuration of the original execution). Permutation test: 500 permutations, before the re-pairing (Deviation 2). Each table states its configuration.
