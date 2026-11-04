@@ -1,0 +1,5 @@
+Analysis,n,controls,pathological,M2,M7,dAUC,CI,p
+Upper motor neuron causes excluded,53,23,30,0.728 (0.564–0.849),0.959 (0.874–0.989),0.232,+0.120 to +0.384,0.0
+"Duplicated-image pairs, one member excluded",60,22,38,0.732 (0.586–0.842),0.952 (0.877–0.984),0.22,+0.117 to +0.362,0.0
+Myopathic causes excluded,46,23,23,0.811 (0.641–0.911),0.953 (0.852–0.990),0.142,+0.053 to +0.282,0.001
+Peripheral nerve causes excluded,57,23,34,0.756 (0.614–0.871),0.953 (0.875–0.985),0.197,+0.090 to +0.331,0.0
