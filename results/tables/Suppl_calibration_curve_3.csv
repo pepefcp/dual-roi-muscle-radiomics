@@ -1,0 +1,6 @@
+Model,mean_predicted,observed,n
+Model 3 — First-order,0.1690712605233373,0.0,13
+Model 3 — First-order,0.3180895816436134,0.3333333333333333,12
+Model 3 — First-order,0.6071989871522767,0.8333333333333334,12
+Model 3 — First-order,0.7892903131984741,1.0,12
+Model 3 — First-order,0.8748188896545681,1.0,13
