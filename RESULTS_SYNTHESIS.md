@@ -7,6 +7,10 @@
 ---
 
 
+> **Note (2026-11-04, b).** All analyses were re-executed at revision on the matrix with the corrected covariate–image pairing of five myopathic participants (`DEVIATIONS_LOG.md`, "Resolution of Correction 4"): primary contrast +0.217 (+0.116 to +0.351); the stratum-2 values below (Model 2 0.266, contrasts +0.672 and +0.656) are superseded by 0.391, +0.562 and +0.531.
+
+> **Note (2026-11-04, a).** The values of Model 3 (first-order radiomics), Model 4 (texture-only radiomics) and the secondary contrast (Model 4 vs Model 2) in this synthesis are those of the original feature-family assignment and are superseded by Correction 6 in `DEVIATIONS_LOG.md` (Model 3 AUC 0.975, 95% BCa CI 0.920–0.995; Model 4 0.901, 0.801–0.957; secondary contrast ΔAUC +0.167, +0.061 to +0.306). All other values stand.
+
 > **Note (2026-11-03).** All model estimates below are those of the full 50-seed execution committed on 2026-08-25 (Deviation 1 resolved; see `DEVIATIONS_LOG.md`). The submitted manuscript reported the 25-seed execution; differences are ≤ 0.011 in AUC in the full cohort and change no conclusion.
 
 ## Headline result
