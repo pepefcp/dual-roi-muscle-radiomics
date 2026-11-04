@@ -120,4 +120,5 @@ def main(n_seeds=25, n_boot=1000):
 
 if __name__ == "__main__":
     n_seeds = int(sys.argv[1]) if len(sys.argv) > 1 else 25
-    main(n_seeds=n_seeds)
+    n_boot = int(sys.argv[2]) if len(sys.argv) > 2 else 1000
+    main(n_seeds=n_seeds, n_boot=n_boot)
